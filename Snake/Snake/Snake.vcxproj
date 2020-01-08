@@ -154,10 +154,8 @@
     <ClCompile Include="Snake.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="difficultyMenu.h" />
-    <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="Menus.h" />
     <ClInclude Include="menuAbstract.h" />
-    <ClInclude Include="settingsMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

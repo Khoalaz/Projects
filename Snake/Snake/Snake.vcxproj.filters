@@ -20,16 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="settingsMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="difficultyMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="menuAbstract.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

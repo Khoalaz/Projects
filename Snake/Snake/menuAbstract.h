@@ -5,32 +5,34 @@
 class menuAbstract {
 public:
 	virtual void menuPrint() = 0;
-	void menuControl(int& key) 
+	int menuControl(int& key) 
 	{
-		if (key == KEY_DOWN_k) //DOWN
+		if (key == KEY_DOWN_k)
 		{
-			if (selection < size)
-				selection++;
-			else
-				selection = 1;
-			
+			if (selection < size) { selection++; }
+			else { selection = 1; }
 		}
-		else if (key == KEY_UP_k) //UP
+		else if (key == KEY_UP_k)
 		{
-			if (selection <= 1)
-				selection = size;
-			else
-				selection--;
+			if (selection <= 1) { selection = size; }
+			else { selection--; }
+		}
+		else if (key == KEY_ENTER_k)
+		{
+			return selection;
 		}
 		menuPrint();
 	}
 protected:
+	const int KEY_UP_k = 72;
+	const int KEY_DOWN_k = 80;
+	const int KEY_ENTER_k = 13;
+	const int WHITE_k = 15;
+	const int HIGHLIGHT_k = 240;
+
 	int selection = 1;
-	int WHITE_k = 15;
-	int HIGHLIGHT_k = 240;
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	int KEY_UP_k = 72;
-	int KEY_DOWN_k = 80;
+	
 
 	int size;
 };
