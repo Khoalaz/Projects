@@ -27,10 +27,10 @@ enum State
 	gMenu_s,
 };
 
-void controls_t(std::queue<int>& key_q, std::condition_variable& cv_State)
+void controls_t(bool&exitFlag, std::queue<int>& key_q, std::condition_variable& cv_State)
 {
 	int key;
-	while (1)
+	while (!exitFlag)
 	{
 		key = 0;
 		if (key = _getch()) 
@@ -41,11 +41,12 @@ void controls_t(std::queue<int>& key_q, std::condition_variable& cv_State)
 	}
 }
 
-void menuState_t(std::queue<int>& key_q, std::mutex& mtx_state, std::condition_variable& cv_State, mainMenu& mMenu, settingsMenu& sMenu, difficultyMenu& dMenu)
+void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_state, std::condition_variable& cv_State, mainMenu& mMenu, settingsMenu& sMenu, difficultyMenu& dMenu)
 {
 	int key;
 	State currentState = mMenu_s;
-	while (1)
+
+	while (!exitFlag)
 	{
 		std::unique_lock<std::mutex> lock(mtx_state);
 		cv_State.wait(lock);							//wait for semaphore
@@ -56,15 +57,68 @@ void menuState_t(std::queue<int>& key_q, std::mutex& mtx_state, std::condition_v
 		switch (currentState)
 		{
 		case mMenu_s:
-			mMenu.menuControl(key);
+			switch (mMenu.menuControl(key))
+			{
+			case 1:
+				currentState = start_s;
+				break;
+			case 2:
+				currentState = history_s;
+				break;
+			case 3:
+				currentState = sMenu_s;
+				sMenu.menuPrint();
+				break;
+			case 4:
+				exitFlag = true;
+				break;
+			}
 			break;
 		case start_s:
+			if (key == 27)
+			{
+				currentState = mMenu_s;
+				mMenu.menuPrint();
+			}
 			break;
 		case history_s:
 			break;
 		case sMenu_s:
+			switch (sMenu.menuControl(key))
+			{
+			case 1:
+				currentState = dMenu_s;
+				dMenu.menuPrint();
+				break;
+			case 2:
+				currentState = gMenu_s;
+				break;
+			case 3:
+				currentState = mMenu_s;
+				mMenu.menuPrint();
+				break;
+			}
 			break;
 		case dMenu_s:
+			switch(dMenu.menuControl(key))
+			{
+			case 1:
+				currentState = sMenu_s;
+				sMenu.menuPrint();
+				break;
+			case 2:
+				currentState = sMenu_s;
+				sMenu.menuPrint();
+				break;
+			case 3:
+				currentState = sMenu_s;
+				sMenu.menuPrint();
+				break;
+			case 4:
+				currentState = sMenu_s;
+				sMenu.menuPrint();
+				break;
+			}
 			break;
 		case gMenu_s:
 			break;
@@ -72,13 +126,9 @@ void menuState_t(std::queue<int>& key_q, std::mutex& mtx_state, std::condition_v
 	}
 }
 
-/*void clearQueue(std::queue<int>& old_q)
-{
-	std::queue<int
-}*/
-
 int main()
 {
+	bool exitFlag=false;
 	mainMenu mMenu;
 	settingsMenu sMenu;
 	difficultyMenu dMenu;
@@ -88,8 +138,8 @@ int main()
 	std::condition_variable cv_State;
 	
 	std::queue<int> key_q;
-	std::thread th0(controls_t, std::ref(key_q), std::ref(cv_State));
-	std::thread th1(menuState_t, std::ref(key_q), std::ref(mtx_state), std::ref(cv_State), std::ref(mMenu), std::ref(sMenu), std::ref(dMenu));
+	std::thread th0(controls_t, std::ref(exitFlag), std::ref(key_q), std::ref(cv_State));
+	std::thread th1(menuState_t, std::ref(exitFlag), std::ref(key_q), std::ref(mtx_state), std::ref(cv_State), std::ref(mMenu), std::ref(sMenu), std::ref(dMenu));
 
 
 	th0.join();

@@ -1,3 +1,3 @@
 ﻿  Snake.cpp
-c:\users\khoalaz\desktop\portfolio\projects\snake\snake\menuabstract.h(25): warning C4715: 'menuAbstract::menuControl': not all control paths return a value
+c:\users\khoalaz\desktop\portfolio\projects\snake\snake\menuabstract.h(26): warning C4715: 'menuAbstract::menuControl': not all control paths return a value
   Snake.vcxproj -> C:\Users\KhoaLaZ\Desktop\Portfolio\Projects\Snake\Debug\Snake.exe

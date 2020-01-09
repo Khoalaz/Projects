@@ -69,6 +69,7 @@ public:
 			std::cout << "2. Grid Size" << std::endl;
 			SetConsoleTextAttribute(hConsole, WHITE_k);
 			std::cout << "3. Back" << std::endl;
+			break;
 		case 3:
 			std::cout << "1. Difficulty\n2. Grid Size" << std::endl;
 			SetConsoleTextAttribute(hConsole, HIGHLIGHT_k);
