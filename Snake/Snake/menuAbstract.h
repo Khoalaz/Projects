@@ -22,7 +22,7 @@ public:
 			return selection;
 		}
 		menuPrint();
-		//std::cout << key;
+		std::cout << "";
 	}
 protected:
 	const int KEY_UP_k = 72;

@@ -10,6 +10,7 @@
 #include <condition_variable>
 #include <queue>
 #include "Menus.h"
+#include "start.h"
 
 /*constexpr int KEY_UP_k = 72;
 constexpr int KEY_DOWN_k = 80;
@@ -41,8 +42,13 @@ void controls_t(bool&exitFlag, std::queue<int>& key_q, std::condition_variable& 
 	}
 }
 
-void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_state, std::condition_variable& cv_State, mainMenu& mMenu, settingsMenu& sMenu, difficultyMenu& dMenu)
+void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_state, std::condition_variable& cv_State)
 {
+	mainMenu mMenu;
+	settingsMenu sMenu;
+	difficultyMenu dMenu;
+	mMenu.menuPrint();
+
 	int key;
 	State currentState = mMenu_s;
 
@@ -100,7 +106,7 @@ void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_state, 
 			}
 			break;
 		case dMenu_s:
-			switch(dMenu.menuControl(key))
+			switch (dMenu.menuControl(key))
 			{
 			case 1:
 				currentState = sMenu_s;
@@ -126,23 +132,25 @@ void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_state, 
 	}
 }
 
+void start_t()
+{
+	start startBoard;
+}
+
 int main()
 {
 	bool exitFlag=false;
-	mainMenu mMenu;
-	settingsMenu sMenu;
-	difficultyMenu dMenu;
-	mMenu.menuPrint();
 
 	std::mutex mtx_state;
 	std::condition_variable cv_State;
 	
 	std::queue<int> key_q;
 	std::thread th0(controls_t, std::ref(exitFlag), std::ref(key_q), std::ref(cv_State));
-	std::thread th1(menuState_t, std::ref(exitFlag), std::ref(key_q), std::ref(mtx_state), std::ref(cv_State), std::ref(mMenu), std::ref(sMenu), std::ref(dMenu));
-
+	std::thread th1(menuState_t, std::ref(exitFlag), std::ref(key_q), std::ref(mtx_state), std::ref(cv_State));
+	std::thread th2(start_t);
 
 	th0.join();
 	th1.join();
+	th2.join();
 	return 0;
 }
