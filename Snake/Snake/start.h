@@ -1,5 +1,6 @@
 #pragma once
 #include "snakeActor.h"
+#include <Windows.h>
 #include <iostream>
 
 class start 
@@ -9,7 +10,7 @@ public:
 	~start();
 	void printBoard();
 	void setGridSize(short sizeInput);
-	void setDifficulty();
+	void setDifficulty(short diffInput);
 private:
 	int msTimer;
 	void setBoardDebugger();

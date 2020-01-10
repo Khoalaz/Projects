@@ -5,6 +5,7 @@ start::start()
 	ySize = 50;
 	xSize = ySize/2;
 	food = false;
+	msTimer = 500;
 	grid2D = new char*[xSize];
 	for (int i = 0; i < xSize; ++i) { grid2D[i] = new char[ySize]; }
 	start::setBoardDebugger();
@@ -12,7 +13,8 @@ start::start()
 
 start::~start()
 {
-	delete grid2D;
+	for (int i = 0; i < xSize; ++i) { delete[] grid2D[i]; }
+	delete[] grid2D;
 }
 
 void start::printBoard()
@@ -52,4 +54,23 @@ void start::setGridSize(short sizeInput)
 	grid2D = new char*[xSize];
 	for (int i = 0; i < xSize; ++i) { grid2D[i] = new char[ySize]; }
 	start::setBoardDebugger();
+}
+
+void start::setDifficulty(short diffInput)
+{
+	switch (diffInput)
+	{
+	case 1:
+		diffInput = 1000;
+		break;
+	case 2:
+		diffInput = 500;
+		break;
+	case 3:
+		diffInput = 250;
+		break;
+	case 4:
+		diffInput = 50;
+		break;
+	}
 }

@@ -1,3 +1,3 @@
 ﻿  Snake.cpp
-c:\users\khoalaz\desktop\portfolio\projects\snake\snake\menuabstract.h(26): warning C4715: 'menuAbstract::menuControl': not all control paths return a value
-  Snake.vcxproj -> C:\Users\KhoaLaZ\Desktop\Portfolio\Projects\Snake\Debug\Snake.exe
+c:\users\khoalaz\desktop\portfolio\projects\snake\snake\snake.cpp(60): error C2374: 'lock': redefinition; multiple initialization
+  c:\users\khoalaz\desktop\portfolio\projects\snake\snake\snake.cpp(59): note: see declaration of 'lock'
