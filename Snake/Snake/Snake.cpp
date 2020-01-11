@@ -28,7 +28,20 @@ enum State
 	gMenu_s,
 };
 
-void controls_t(bool&exitFlag, std::queue<int>& key_q, std::condition_variable& cv_State)
+void startSnake(start& startBoard)
+{
+	bool endSnake = false;
+	int key;
+	while (!endSnake)
+	{
+		if (key = _getch())
+		{
+			std::cout << key << std::endl;
+		}
+	}
+}
+
+void controls_t(bool&exitFlag, std::queue<int>& key_q, std::condition_variable& cv_Control)
 {
 	int key;
 	while (!exitFlag)
@@ -37,12 +50,12 @@ void controls_t(bool&exitFlag, std::queue<int>& key_q, std::condition_variable& 
 		if (key = _getch()) 
 		{ 
 			key_q.push(key);
-			cv_State.notify_all();						//send semaphore to all
+			cv_Control.notify_one();						//send semaphore to all
 		}
 	}
 }
 
-void menuState_t(bool& exitFlag, bool& snakeExitFlag, std::queue<int>& key_q, std::queue<short>& settingsData_q, std::mutex& mtx_state, std::mutex& mtx_startSnake, std::mutex& mtx_endSnake, std::condition_variable& cv_State, std::condition_variable& cv_startSnake, std::condition_variable& cv_endSnake)
+void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_Control, std::condition_variable& cv_Control)
 {
 	start startBoard;
 
@@ -56,9 +69,8 @@ void menuState_t(bool& exitFlag, bool& snakeExitFlag, std::queue<int>& key_q, st
 
 	while (!exitFlag)
 	{
-		std::unique_lock<std::mutex> lock(mtx_state);
-		std::unique_lock<std::mutex> lock(mtx_endSnake);	//wait for semaphore from Start
-		cv_State.wait(lock);							//wait for semaphore from Control
+		std::unique_lock<std::mutex> lock_state(mtx_Control);
+		cv_Control.wait(lock_state);							//wait for semaphore from Control
 
 		key = key_q.back();
 		key_q = std::queue<int>();						//clear queue size of 2 if arrow keys are used
@@ -80,14 +92,12 @@ void menuState_t(bool& exitFlag, bool& snakeExitFlag, std::queue<int>& key_q, st
 				break;
 			case 4:
 				exitFlag = true;
-				snakeExitFlag = true;
-				cv_startSnake.notify_one();					//send semaphore to Start
 				break;
 			}
 			break;
 		case start_s:
-			cv_startSnake.notify_one();					//send semaphore to Start
-			cv_endSnake.wait(lock);
+			startSnake(startBoard);
+			mMenu.menuPrint();
 			break;
 		case history_s:
 			break;
@@ -134,53 +144,19 @@ void menuState_t(bool& exitFlag, bool& snakeExitFlag, std::queue<int>& key_q, st
 	}
 }
 
-void startSnake_t(bool& exitFlag, bool& snakeExitFlag, std::queue<int>& key_q, std::queue<short>& settingsData_q, std::mutex& mtx_startSnake, std::mutex& mtx_endSnake, std::condition_variable& cv_startSnake, std::condition_variable& cv_endSnake)
-{
-	start startSnake;
-	int key;
-
-	while (!exitFlag)
-	{
-		std::unique_lock<std::mutex> lock(mtx_startSnake);	//wait for semaphore from Menu
-		cv_startSnake.wait(lock);
-		while (!snakeExitFlag)
-		{
-			/*key = key_q.back();
-			key_q = std::queue<int>();						//clear queue size of 2 if arrow keys are used
-
-			std::cout << key << std::endl;
-
-			if (key == 27)
-			{
-				snakeExitFlag = true;
-				cv_startSnake.notify_one();
-			}*/
-		}
-		startSnake.printBoard();
-	}
-	//startSnake.~start();
-}
-
 int main()
 {
 	bool exitFlag=false;
-	bool snakeExitFlag = false;
 
-	std::mutex mtx_state;
-	std::mutex mtx_startSnake;
-	std::mutex mtx_endSnake;
-	std::condition_variable cv_State;
-	std::condition_variable cv_startSnake;
-	std::condition_variable cv_endSnake;
+	std::mutex mtx_Control;
+	std::condition_variable cv_Control;
 	
 	std::queue<int> key_q;
-	std::queue<short> settingsData_q;
-	std::thread th0(controls_t, std::ref(exitFlag), std::ref(key_q), std::ref(cv_State));
-	std::thread th1(menuState_t, std::ref(exitFlag), std::ref(snakeExitFlag), std::ref(key_q), std::ref(settingsData_q), std::ref(mtx_state), std::ref(mtx_startSnake),std::ref(mtx_endSnake), std::ref(cv_State), std::ref(cv_startSnake), std::ref(cv_endSnake));
-	std::thread th2(startSnake_t, std::ref(exitFlag), std::ref(snakeExitFlag), std::ref(key_q), std::ref(settingsData_q), std::ref(mtx_startSnake), std::ref(mtx_endSnake), std::ref(cv_startSnake), std::ref(cv_endSnake));
+	std::thread th0(controls_t, std::ref(exitFlag), std::ref(key_q), std::ref(cv_Control));
+	std::thread th1(menuState_t, std::ref(exitFlag), std::ref(key_q), std::ref(mtx_Control), std::ref(cv_Control));
+
 
 	th0.join();
 	th1.join();
-	th2.join();
 	return 0;
 }
