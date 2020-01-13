@@ -16,7 +16,7 @@
 constexpr int KEY_DOWN_k = 80;
 constexpr int KEY_LEFT_k = 75;
 constexpr int KEY_RIGHT_k = 77;*/
-constexpr int KEY_ENTER_k = 13;
+constexpr int KEY_EXIT_k = 27;
 
 enum State
 {
@@ -28,16 +28,26 @@ enum State
 	gMenu_s,
 };
 
-void startSnake(start& startBoard)
+void startSnake(start& startBoard, std::queue<int> &key_q)
 {
 	bool endSnake = false;
-	int key;
+	int key = 0;
 	while (!endSnake)
 	{
-		if (key = _getch())
+		if (!key_q.empty())
 		{
-			std::cout << key << std::endl;
+			std::cout << "";
+			key = key_q.back();
+			key_q = std::queue<int>();						//clear queue size of 2 if arrow keys are used
+			//std::cout << key << std::endl;
 		}
+		if (key == KEY_EXIT_k)
+		{
+			std::cout << "exit" << std::endl;
+			endSnake = true;
+		}
+
+
 	}
 }
 
@@ -55,13 +65,12 @@ void controls_t(bool&exitFlag, std::queue<int>& key_q, std::condition_variable& 
 	}
 }
 
-void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_Control, std::condition_variable& cv_Control)
+void menuState_t(start& startBoard, bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_Control, std::condition_variable& cv_Control)
 {
-	start startBoard;
-
 	mainMenu mMenu;
 	settingsMenu sMenu;
 	difficultyMenu dMenu;
+	gridMenu gMenu;
 	mMenu.menuPrint();
 
 	int key;
@@ -82,6 +91,8 @@ void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_Control
 			{
 			case 1:
 				currentState = start_s;
+				startSnake(startBoard, key_q);
+				mMenu.menuPrint();
 				break;
 			case 2:
 				currentState = history_s;
@@ -96,8 +107,7 @@ void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_Control
 			}
 			break;
 		case start_s:
-			startSnake(startBoard);
-			mMenu.menuPrint();
+			currentState = mMenu_s;
 			break;
 		case history_s:
 			break;
@@ -110,6 +120,7 @@ void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_Control
 				break;
 			case 2:
 				currentState = gMenu_s;
+				gMenu.menuPrint();
 				break;
 			case 3:
 				currentState = mMenu_s;
@@ -121,24 +132,46 @@ void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_Control
 			switch (dMenu.menuControl(key))
 			{
 			case 1:
+				startBoard.setDifficulty(1);
 				currentState = sMenu_s;
 				sMenu.menuPrint();
 				break;
 			case 2:
+				startBoard.setDifficulty(2);
 				currentState = sMenu_s;
 				sMenu.menuPrint();
 				break;
 			case 3:
+				startBoard.setDifficulty(3);
 				currentState = sMenu_s;
 				sMenu.menuPrint();
 				break;
 			case 4:
+				startBoard.setDifficulty(4);
 				currentState = sMenu_s;
 				sMenu.menuPrint();
 				break;
 			}
 			break;
 		case gMenu_s:
+			switch (gMenu.menuControl(key))
+			{
+			case 1:
+				startBoard.setGridSize(25);
+				currentState = sMenu_s;
+				sMenu.menuPrint();
+				break;
+			case 2:
+				startBoard.setGridSize(50);
+				currentState = sMenu_s;
+				sMenu.menuPrint();
+				break;
+			case 3:
+				startBoard.setGridSize(100);
+				currentState = sMenu_s;
+				sMenu.menuPrint();
+				break;
+			}
 			break;
 		}
 	}
@@ -147,13 +180,14 @@ void menuState_t(bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_Control
 int main()
 {
 	bool exitFlag=false;
+	start startBoard;
 
 	std::mutex mtx_Control;
 	std::condition_variable cv_Control;
 	
 	std::queue<int> key_q;
 	std::thread th0(controls_t, std::ref(exitFlag), std::ref(key_q), std::ref(cv_Control));
-	std::thread th1(menuState_t, std::ref(exitFlag), std::ref(key_q), std::ref(mtx_Control), std::ref(cv_Control));
+	std::thread th1(menuState_t, std::ref(startBoard), std::ref(exitFlag), std::ref(key_q), std::ref(mtx_Control), std::ref(cv_Control));
 
 
 	th0.join();

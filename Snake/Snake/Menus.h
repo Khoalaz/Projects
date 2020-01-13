@@ -122,3 +122,39 @@ public:
 		}
 	}
 };
+
+class gridMenu : public menuAbstract
+{
+public:
+	gridMenu()
+	{
+		size = 3;
+	}
+
+	void menuPrint()
+	{
+		system("cls");
+		switch (selection)
+		{
+		case 1:
+			SetConsoleTextAttribute(hConsole, HIGHLIGHT_k);
+			std::cout << " 50%" << std::endl;
+			SetConsoleTextAttribute(hConsole, WHITE_k);
+			std::cout << " 100%\n 200%" << std::endl;
+			break;
+		case 2:
+			std::cout << " 50%" << std::endl;
+			SetConsoleTextAttribute(hConsole, HIGHLIGHT_k);
+			std::cout << " 100%" << std::endl;
+			SetConsoleTextAttribute(hConsole, WHITE_k);
+			std::cout << " 200%" << std::endl;
+			break;
+		case 3:
+			std::cout << " 50%\n 100%" << std::endl;
+			SetConsoleTextAttribute(hConsole, HIGHLIGHT_k);
+			std::cout << " 200%" << std::endl;
+			SetConsoleTextAttribute(hConsole, WHITE_k);
+			break;
+		}
+	}
+};
