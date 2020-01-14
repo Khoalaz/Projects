@@ -30,6 +30,7 @@ enum State
 
 void startSnake(start& startBoard, std::queue<int> &key_q)
 {
+	startBoard.printBoard();
 	bool endSnake = false;
 	int key = 0;
 	while (!endSnake)
@@ -40,12 +41,14 @@ void startSnake(start& startBoard, std::queue<int> &key_q)
 			key = key_q.back();
 			key_q = std::queue<int>();						//clear queue size of 2 if arrow keys are used
 			//std::cout << key << std::endl;
+			startBoard.printBoard();
 		}
 		if (key == KEY_EXIT_k)
 		{
 			std::cout << "exit" << std::endl;
 			endSnake = true;
 		}
+
 
 
 	}
@@ -180,6 +183,7 @@ void menuState_t(start& startBoard, bool& exitFlag, std::queue<int>& key_q, std:
 int main()
 {
 	bool exitFlag=false;
+	srand(static_cast<unsigned int>(time(0)));
 	start startBoard;
 
 	std::mutex mtx_Control;

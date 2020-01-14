@@ -2,6 +2,9 @@
 #include "snakeActor.h"
 #include <Windows.h>
 #include <iostream>
+#include <stdlib.h>
+#include <random>
+#include <time.h>
 
 class start 
 {
@@ -11,10 +14,14 @@ public:
 	void printBoard();
 	void setGridSize(short sizeInput);
 	void setDifficulty(short diffInput);
+
 private:
-	int msTimer;
 	void setBoardDebugger();
+	void foodGenerator();			//to be worked on
+
+	int msTimer;
 	short xSize,ySize;
 	char** grid2D;
 	bool food;
+	snakeActor snake;
 };

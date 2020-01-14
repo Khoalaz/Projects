@@ -75,3 +75,17 @@ void start::setDifficulty(short diffInput)
 		break;
 	}
 }
+
+void start::foodGenerator()
+{
+	int foodPosX = rand() % (xSize - 1) + 1;
+	int foodPosY = rand() % (ySize - 1) + 1;
+	while (food == false)
+	{
+		foodPosX = rand() % (xSize - 1) + 1;
+		if (grid2D[foodPosX, foodPosY])
+		{
+
+		}
+	}
+}
