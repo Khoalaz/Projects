@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <random>
 #include <time.h>
+#include <vector>
 
 class start 
 {
@@ -17,11 +18,14 @@ public:
 
 private:
 	void setBoardDebugger();
+	void setSnakeDebugger();
 	void foodGenerator();			//to be worked on
 
 	int msTimer;
 	short xSize,ySize;
 	char** grid2D;
 	bool food;
+
 	snakeActor snake;
+	std::vector<snakeFragment>& snakeFrag = snake.getSnakeFrag();
 };

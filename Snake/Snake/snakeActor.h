@@ -7,8 +7,8 @@ struct coordinates {
 };
 
 struct snakeFragment{
-	coordinates* next, previous;
-	coordinates current;
+	coordinates current, next;
+	bool first, last;
 };
 
 class snakeActor
@@ -16,6 +16,7 @@ class snakeActor
 public:
 	snakeActor();
 	void setInitPos(const int gridX, const int gridY);
+	std::vector<snakeFragment>& getSnakeFrag();
 private:
 	short size;
 	std::vector<snakeFragment> snake;

@@ -2,13 +2,19 @@
 
 start::start()
 {
-	ySize = 50;
-	xSize = ySize/2;
-	food = false;
+	setGridSize(50);
 	msTimer = 500;
+}
+
+void start::setGridSize(short sizeInput)
+{
+	ySize = sizeInput;
+	xSize = ySize / 2;
+	food = false;
 	grid2D = new char*[xSize];
 	for (int i = 0; i < xSize; ++i) { grid2D[i] = new char[ySize]; }
 	start::setBoardDebugger();
+	snake.setInitPos(xSize, ySize);
 }
 
 start::~start()
@@ -46,15 +52,15 @@ void start::setBoardDebugger()
 			}
 		}
 	}
+	setSnakeDebugger();
 }
 
-void start::setGridSize(short sizeInput)
+void start::setSnakeDebugger()
 {
-	ySize = sizeInput;
-	xSize = ySize / 2;
-	grid2D = new char*[xSize];
-	for (int i = 0; i < xSize; ++i) { grid2D[i] = new char[ySize]; }
-	start::setBoardDebugger();
+	for (std::vector<snakeFragment>::iterator it = snakeFrag.begin(); it != snakeFrag.end(); ++it)
+	{
+		grid2D[it->current.x][it->current.y] = 'O';
+	}
 }
 
 void start::setDifficulty(short diffInput)
