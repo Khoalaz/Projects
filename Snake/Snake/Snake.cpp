@@ -15,8 +15,8 @@
 /*constexpr int KEY_UP_k = 72;
 constexpr int KEY_DOWN_k = 80;
 constexpr int KEY_LEFT_k = 75;
-constexpr int KEY_RIGHT_k = 77;*/
-constexpr int KEY_EXIT_k = 27;
+constexpr int KEY_RIGHT_k = 77;
+constexpr int KEY_EXIT_k = 27;*/
 
 enum State
 {
@@ -27,32 +27,6 @@ enum State
 	dMenu_s,
 	gMenu_s,
 };
-
-void startSnake(start& startBoard, std::queue<int> &key_q)
-{
-	startBoard.printBoard();
-	bool endSnake = false;
-	int key = 0;
-	while (!endSnake)
-	{
-		if (!key_q.empty())
-		{
-			std::cout << "";
-			key = key_q.back();
-			key_q = std::queue<int>();						//clear queue size of 2 if arrow keys are used
-			//std::cout << key << std::endl;
-			startBoard.printBoard();
-		}
-		if (key == KEY_EXIT_k)
-		{
-			std::cout << "exit" << std::endl;
-			endSnake = true;
-		}
-
-
-
-	}
-}
 
 void controls_t(bool&exitFlag, std::queue<int>& key_q, std::condition_variable& cv_Control)
 {
@@ -94,7 +68,7 @@ void menuState_t(start& startBoard, bool& exitFlag, std::queue<int>& key_q, std:
 			{
 			case 1:
 				currentState = start_s;
-				startSnake(startBoard, key_q);
+				startBoard.startSnake(startBoard, key_q);
 				mMenu.menuPrint();
 				break;
 			case 2:

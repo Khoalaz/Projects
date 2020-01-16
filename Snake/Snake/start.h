@@ -6,19 +6,23 @@
 #include <random>
 #include <time.h>
 #include <vector>
+#include <queue>
+
+constexpr int KEY_EXIT_k = 27;
 
 class start 
 {
 public:
 	start();
 	~start();
+	void startSnake(start& startBoard, std::queue<int> &key_q);
 	void printBoard();
 	void setGridSize(short sizeInput);
 	void setDifficulty(short diffInput);
 
 private:
 	void setBoardDebugger();
-	void setSnakeDebugger();
+	inline void setSnakeDebugger();
 	void foodGenerator();			//to be worked on
 
 	int msTimer;

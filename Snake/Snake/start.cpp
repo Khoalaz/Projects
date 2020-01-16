@@ -13,8 +13,34 @@ void start::setGridSize(short sizeInput)
 	food = false;
 	grid2D = new char*[xSize];
 	for (int i = 0; i < xSize; ++i) { grid2D[i] = new char[ySize]; }
-	start::setBoardDebugger();
 	snake.setInitPos(xSize, ySize);
+	setBoardDebugger();
+}
+
+void start::startSnake(start& startBoard, std::queue<int> &key_q)
+{
+	startBoard.printBoard();
+	bool endSnake = false;
+	int key = 0;
+	while (!endSnake)
+	{
+		if (!key_q.empty())
+		{
+			std::cout << "";
+			key = key_q.back();
+			key_q = std::queue<int>();						//clear queue size of 2 if arrow keys are used
+			//std::cout << key << std::endl;
+			startBoard.printBoard();
+		}
+		if (key == KEY_EXIT_k)
+		{
+			std::cout << "exit" << std::endl;
+			endSnake = true;
+		}
+
+
+
+	}
 }
 
 start::~start()
@@ -60,6 +86,7 @@ void start::setSnakeDebugger()
 	for (std::vector<snakeFragment>::iterator it = snakeFrag.begin(); it != snakeFrag.end(); ++it)
 	{
 		grid2D[it->current.x][it->current.y] = 'O';
+		//clear previous fragment
 	}
 }
 

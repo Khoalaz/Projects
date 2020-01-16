@@ -2,6 +2,12 @@
 #include <Windows.h>
 #include <iostream>
 
+constexpr int KEY_UP_k = 72;
+constexpr int KEY_DOWN_k = 80;
+constexpr int KEY_ENTER_k = 13;
+constexpr int WHITE_k = 15;
+constexpr int HIGHLIGHT_k = 240;
+
 class menuAbstract {
 public:
 	virtual void menuPrint() = 0;
@@ -25,15 +31,7 @@ public:
 		std::cout << "";
 	}
 protected:
-	const int KEY_UP_k = 72;
-	const int KEY_DOWN_k = 80;
-	const int KEY_ENTER_k = 13;
-	const int WHITE_k = 15;
-	const int HIGHLIGHT_k = 240;
-
 	int selection = 1;
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	
-
 	int size;
 };
