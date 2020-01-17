@@ -29,12 +29,45 @@ void snakeActor::setInitPos(const int gridX, const int gridY)
 
 void snakeActor::nextPos()
 {
-
+	switch (snakeS)
+	{
+	case UP:
+		break;
+	case DOWN:
+		break;
+	case LEFT:
+		break;
+	case RIGHT:
+		break;
+	}
 }
 
-void snakeActor::setSnakeDirection(std::queue<int>& key_q)
+void snakeActor::setSnakeDirection(int* key)
 {
-
+	if (snakeS == UP || snakeS == DOWN)
+	{
+		switch (*key)
+		{
+		case KEY_LEFT_k:
+			snakeS = LEFT;
+			break;
+		case KEY_RIGHT_k:
+			snakeS = RIGHT;
+			break;
+		}
+	}
+	else if (snakeS == LEFT || snakeS == RIGHT)
+	{
+		switch (*key)
+		{
+		case KEY_UP_k:
+			snakeS = UP;
+			break;
+		case KEY_DOWN_k:
+			snakeS = DOWN;
+			break;
+		}
+	}
 }
 
 std::vector<snakeFragment>& snakeActor::getSnakeFrag()

@@ -3,6 +3,8 @@
 #include <queue>
 #include "constSource.h"
 
+#include <iostream>
+
 struct coordinates {
 	short x;
 	short y;
@@ -27,7 +29,7 @@ public:
 	snakeActor();
 	void setInitPos(const int gridX, const int gridY);
 	void nextPos();
-	void setSnakeDirection(std::queue<int>& key_q);
+	void setSnakeDirection(int* key);
 	std::vector<snakeFragment>& getSnakeFrag();
 private:
 	snakeState snakeS;

@@ -29,8 +29,9 @@ void start::startSnake(start& startBoard, std::queue<int> &key_q)
 			std::cout << "";
 			key = key_q.back();
 			key_q = std::queue<int>();						//clear queue size of 2 if arrow keys are used
+			snake.setSnakeDirection(&key);
 			//std::cout << key << std::endl;
-			startBoard.printBoard();
+			//startBoard.printBoard();
 		}
 		if (key == KEY_EXIT_k)
 		{
