@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <queue>
+#include "constSource.h"
 
 struct coordinates {
 	short x;
@@ -8,8 +9,16 @@ struct coordinates {
 };
 
 struct snakeFragment{
-	coordinates current, next;
+	snakeFragment* next;
+	coordinates current;
 	bool first, last;
+};
+
+enum snakeState {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
 };
 
 class snakeActor
@@ -21,6 +30,6 @@ public:
 	void setSnakeDirection(std::queue<int>& key_q);
 	std::vector<snakeFragment>& getSnakeFrag();
 private:
-	short size;
+	snakeState snakeS;
 	std::vector<snakeFragment> snake;
 };

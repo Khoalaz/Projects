@@ -24,6 +24,9 @@
     <ClCompile Include="snakeActor.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="constSource.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="menuAbstract.h">

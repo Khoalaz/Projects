@@ -1,12 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <iostream>
-
-constexpr int KEY_UP_k = 72;
-constexpr int KEY_DOWN_k = 80;
-constexpr int KEY_ENTER_k = 13;
-constexpr int WHITE_k = 15;
-constexpr int HIGHLIGHT_k = 240;
+#include "constSource.h"
 
 class menuAbstract {
 public:

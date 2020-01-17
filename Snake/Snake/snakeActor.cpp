@@ -6,6 +6,7 @@ snakeActor::snakeActor()
 
 void snakeActor::setInitPos(const int gridX, const int gridY)
 {
+	snakeS = RIGHT;
 	snake.clear();
 
 	snakeFragment sFrag;
@@ -13,21 +14,17 @@ void snakeActor::setInitPos(const int gridX, const int gridY)
 	sFrag.last = false;
 	sFrag.current.x = gridX / 2;
 	sFrag.current.y = gridY / 2;
-	sFrag.next.x = sFrag.current.x;
-	sFrag.next.y = sFrag.current.y + 1;
 	snake.push_back(sFrag);
 
 	sFrag.first = false;
-	sFrag.next.y = sFrag.current.y;
+	sFrag.next = &snake.back();
 	sFrag.current.y = sFrag.current.y - 1;
 	snake.push_back(sFrag);
 
 	sFrag.last = true;
-	sFrag.next.y = sFrag.current.y;
+	sFrag.next = &snake.back();
 	sFrag.current.y = sFrag.current.y - 1;
 	snake.push_back(sFrag);
-
-	size = snake.size();
 }
 
 void snakeActor::nextPos()

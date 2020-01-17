@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="snakeActor.cpp" />
+    <ClCompile Include="constSource.h" />
     <ClCompile Include="start.cpp" />
   </ItemGroup>
   <ItemGroup>

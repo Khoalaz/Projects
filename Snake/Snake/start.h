@@ -7,8 +7,7 @@
 #include <time.h>
 #include <vector>
 #include <queue>
-
-constexpr int KEY_EXIT_k = 27;
+#include "constSource.h"
 
 class start 
 {
