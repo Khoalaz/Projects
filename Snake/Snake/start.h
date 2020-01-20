@@ -23,6 +23,8 @@ private:
 	void setBoardDebugger();
 	inline void setSnakeDebugger();
 	void foodGenerator();			//to be worked on
+	inline void clearTail();
+	inline void flush();
 
 	int msTimer;
 	short xSize,ySize;
@@ -30,5 +32,5 @@ private:
 	bool food;
 
 	snakeActor snake;
-	std::vector<snakeFragment>& snakeFrag = snake.getSnakeFrag();
+	std::vector<coordinates>& snakeFrag = snake.getSnakeFrag();
 };

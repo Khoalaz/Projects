@@ -10,12 +10,6 @@ struct coordinates {
 	short y;
 };
 
-struct snakeFragment{
-	snakeFragment* next;
-	coordinates current;
-	bool first, last;
-};
-
 enum snakeState {
 	UP,
 	DOWN,
@@ -30,8 +24,10 @@ public:
 	void setInitPos(const int gridX, const int gridY);
 	void nextPos();
 	void setSnakeDirection(int* key);
-	std::vector<snakeFragment>& getSnakeFrag();
+	std::vector<coordinates>& getSnakeFrag();
+
+	void printCoord();			//debugger
 private:
 	snakeState snakeS;
-	std::vector<snakeFragment> snake;
+	std::vector<coordinates> snake;
 };

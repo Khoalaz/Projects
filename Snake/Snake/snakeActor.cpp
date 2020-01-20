@@ -9,35 +9,39 @@ void snakeActor::setInitPos(const int gridX, const int gridY)
 	snakeS = RIGHT;
 	snake.clear();
 
-	snakeFragment sFrag;
-	sFrag.first = true;
-	sFrag.last = false;
-	sFrag.current.x = gridX / 2;
-	sFrag.current.y = gridY / 2;
-	snake.push_back(sFrag);
+	coordinates current;
+	current.x = gridX / 2;
+	current.y = gridY / 2;
+	snake.push_back(current);
 
-	sFrag.first = false;
-	sFrag.next = &snake.back();
-	sFrag.current.y = sFrag.current.y - 1;
-	snake.push_back(sFrag);
+	current.y -= 1;
+	snake.push_back(current);
 
-	sFrag.last = true;
-	sFrag.next = &snake.back();
-	sFrag.current.y = sFrag.current.y - 1;
-	snake.push_back(sFrag);
+	current.y -= 1;
+	snake.push_back(current);
 }
 
 void snakeActor::nextPos()
 {
+	for (std::vector<coordinates>::reverse_iterator rit = snake.rbegin(); rit != snake.rend() - 1; ++rit)
+	{
+		rit->x = (rit + 1)->x;
+		rit->y = (rit + 1)->y;
+	}
+
 	switch (snakeS)
 	{
 	case UP:
+		snake.front().x -= 1;
 		break;
 	case DOWN:
+		snake.front().x += 1;
 		break;
 	case LEFT:
+		snake.front().y -= 1;
 		break;
 	case RIGHT:
+		snake.front().y += 1;
 		break;
 	}
 }
@@ -70,7 +74,15 @@ void snakeActor::setSnakeDirection(int* key)
 	}
 }
 
-std::vector<snakeFragment>& snakeActor::getSnakeFrag()
+std::vector<coordinates>& snakeActor::getSnakeFrag()
 {
 	return snake;
+}
+
+void snakeActor::printCoord()
+{
+	for (std::vector<coordinates>::iterator it = snake.begin(); it != snake.end(); ++it)
+	{
+		std::cout << it->x << " " << it->y << std::endl;
+	}
 }

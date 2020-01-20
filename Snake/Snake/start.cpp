@@ -13,25 +13,29 @@ void start::setGridSize(short sizeInput)
 	food = false;
 	grid2D = new char*[xSize];
 	for (int i = 0; i < xSize; ++i) { grid2D[i] = new char[ySize]; }
-	snake.setInitPos(xSize, ySize);
-	setBoardDebugger();
+	flush();
 }
 
 void start::startSnake(start& startBoard, std::queue<int> &key_q)
 {
-	startBoard.printBoard();
+	//snake.printCoord();
+	//startBoard.printBoard();
 	bool endSnake = false;
 	int key = 0;
 	while (!endSnake)
 	{
 		if (!key_q.empty())
 		{
-			std::cout << "";
+			std::cout << "";								//data race delay
 			key = key_q.back();
 			key_q = std::queue<int>();						//clear queue size of 2 if arrow keys are used
+			
 			snake.setSnakeDirection(&key);
-			//std::cout << key << std::endl;
-			//startBoard.printBoard();
+			snake.nextPos();
+			setSnakeDebugger();
+			clearTail();
+			//snake.printCoord();
+			startBoard.printBoard();
 		}
 		if (key == KEY_EXIT_k)
 		{
@@ -42,6 +46,7 @@ void start::startSnake(start& startBoard, std::queue<int> &key_q)
 
 
 	}
+	flush();
 }
 
 start::~start()
@@ -84,11 +89,15 @@ void start::setBoardDebugger()
 
 void start::setSnakeDebugger()
 {
-	for (std::vector<snakeFragment>::iterator it = snakeFrag.begin(); it != snakeFrag.end(); ++it)
+	for (std::vector<coordinates>::iterator it = snakeFrag.begin(); it != snakeFrag.end(); ++it)
 	{
-		grid2D[it->current.x][it->current.y] = 'O';
-		//clear previous fragment
+		grid2D[it->x][it->y] = 'O';
 	}
+}
+
+void start::clearTail()
+{
+	grid2D[snakeFrag.back().x][snakeFrag.back().y] = ' ';
 }
 
 void start::setDifficulty(short diffInput)
@@ -122,4 +131,10 @@ void start::foodGenerator()
 
 		}
 	}
+}
+
+void start::flush()
+{
+	snake.setInitPos(xSize, ySize);
+	setBoardDebugger();
 }
