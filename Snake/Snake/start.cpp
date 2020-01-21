@@ -3,7 +3,7 @@
 start::start()
 {
 	setGridSize(50);
-	msTimer = 500;
+	msTimer = 50;
 }
 
 void start::setGridSize(short sizeInput)
@@ -18,8 +18,8 @@ void start::setGridSize(short sizeInput)
 
 void start::startSnake(start& startBoard, std::queue<int> &key_q)
 {
-	//snake.printCoord();
-	//startBoard.printBoard();
+	startBoard.printBoard();
+	coordinates tempCoord;
 	bool endSnake = false;
 	int key = 0;
 	while (!endSnake)
@@ -31,20 +31,17 @@ void start::startSnake(start& startBoard, std::queue<int> &key_q)
 			key_q = std::queue<int>();						//clear queue size of 2 if arrow keys are used
 			
 			snake.setSnakeDirection(&key);
-			snake.nextPos();
-			setSnakeDebugger();
-			clearTail();
-			//snake.printCoord();
-			startBoard.printBoard();
 		}
 		if (key == KEY_EXIT_k)
 		{
-			std::cout << "exit" << std::endl;
 			endSnake = true;
 		}
 
-
-
+		tempCoord = snakeFrag.back();
+		snake.nextPos();
+		snakePrintPos(&tempCoord);
+		startBoard.printBoard();
+		Sleep(msTimer);
 	}
 	flush();
 }
@@ -95,9 +92,10 @@ void start::setSnakeDebugger()
 	}
 }
 
-void start::clearTail()
+void start::snakePrintPos(coordinates* tempCoord)
 {
-	grid2D[snakeFrag.back().x][snakeFrag.back().y] = ' ';
+	setSnakeDebugger();
+	grid2D[tempCoord->x][tempCoord->y] = ' ';
 }
 
 void start::setDifficulty(short diffInput)
@@ -105,16 +103,16 @@ void start::setDifficulty(short diffInput)
 	switch (diffInput)
 	{
 	case 1:
-		diffInput = 1000;
+		msTimer = 200;
 		break;
 	case 2:
-		diffInput = 500;
+		msTimer = 50;
 		break;
 	case 3:
-		diffInput = 250;
+		msTimer = 20;
 		break;
 	case 4:
-		diffInput = 50;
+		msTimer = 0;
 		break;
 	}
 }

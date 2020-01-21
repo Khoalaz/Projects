@@ -23,7 +23,7 @@ private:
 	void setBoardDebugger();
 	inline void setSnakeDebugger();
 	void foodGenerator();			//to be worked on
-	inline void clearTail();
+	inline void snakePrintPos(coordinates *tempCoord);
 	inline void flush();
 
 	int msTimer;
