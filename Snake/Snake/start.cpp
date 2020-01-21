@@ -10,7 +10,7 @@ void start::setGridSize(short sizeInput)
 {
 	ySize = sizeInput;
 	xSize = ySize / 2;
-	food = false;
+	sFood.fSpawned = false;
 	grid2D = new char*[xSize];
 	for (int i = 0; i < xSize; ++i) { grid2D[i] = new char[ySize]; }
 	flush();
@@ -82,6 +82,7 @@ void start::setBoardDebugger()
 		}
 	}
 	setSnakeDebugger();
+	foodGenerator();
 }
 
 void start::setSnakeDebugger()
@@ -119,16 +120,19 @@ void start::setDifficulty(short diffInput)
 
 void start::foodGenerator()
 {
-	int foodPosX = rand() % (xSize - 1) + 1;
-	int foodPosY = rand() % (ySize - 1) + 1;
-	while (food == false)
+	coordinates foodPos;
+	while (sFood.fSpawned != true)
 	{
-		foodPosX = rand() % (xSize - 1) + 1;
-		if (grid2D[foodPosX, foodPosY])
-		{
-
-		}
+		foodPos.x = rand() % (xSize - 2) + 1;
+		foodPos.y = rand() % (ySize - 2) + 1;
+		sFood.fSpawned = true;
 	}
+	foodPrintPos();
+}
+
+void start::foodPrintPos()
+{
+	grid2D[sFood.foodPos.x][sFood.foodPos.y] = '0';
 }
 
 void start::flush()

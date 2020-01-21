@@ -9,6 +9,11 @@
 #include <queue>
 #include "constSource.h"
 
+struct food{
+	bool fSpawned;
+	coordinates foodPos;
+};
+
 class start 
 {
 public:
@@ -24,12 +29,14 @@ private:
 	inline void setSnakeDebugger();
 	void foodGenerator();			//to be worked on
 	inline void snakePrintPos(coordinates *tempCoord);
+	inline void foodPrintPos();
 	inline void flush();
 
 	int msTimer;
 	short xSize,ySize;
 	char** grid2D;
-	bool food;
+	food sFood;
+	
 
 	snakeActor snake;
 	std::vector<coordinates>& snakeFrag = snake.getSnakeFrag();
