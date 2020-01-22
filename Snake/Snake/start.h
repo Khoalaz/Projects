@@ -36,9 +36,9 @@ private:
 	int msTimer;
 	short xSize,ySize;
 	char** grid2D;
+	bool endSnake;
 	food sFood;
 	
 	snakeActor snake;
 	std::vector<coordinates>& snakeFrag = snake.getSnakeFrag();
-	coordinates snakeNextCoord;
 };

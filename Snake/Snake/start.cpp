@@ -18,12 +18,12 @@ void start::setGridSize(short sizeInput)
 
 void start::startSnake(start& startBoard, std::queue<int> &key_q)
 {
-	startBoard.printBoard();
 	coordinates tempCoord;
-	bool endSnake = false;
+	endSnake = false;
 	int key = 0;
 	while (!endSnake)
 	{
+		startBoard.printBoard();
 		if (!key_q.empty())
 		{
 			std::cout << "";								//data race delay
@@ -37,12 +37,12 @@ void start::startSnake(start& startBoard, std::queue<int> &key_q)
 			endSnake = true;
 		}
 
-		//boardCheck();
+		boardCheck();
 
 		tempCoord = snakeFrag.back();
 		snake.nextPos();
 		snakePrintPos(&tempCoord);
-		startBoard.printBoard();
+
 		Sleep(msTimer);
 	}
 	flush();
@@ -69,7 +69,7 @@ void start::printBoard()
 
 void start::boardCheck()
 {
-	snakeNextCoord = snakeFrag.front();
+	coordinates snakeNextCoord = snakeFrag.front();
 	switch (snake.getSnakeDirection())
 	{
 	case UP:
@@ -85,6 +85,15 @@ void start::boardCheck()
 		snakeNextCoord.y++;
 		break;
 	}
+
+	if (grid2D[snakeNextCoord.x][snakeNextCoord.y] == ' '){}
+	else if (grid2D[snakeNextCoord.x][snakeNextCoord.y] == '0')
+	{
+
+	}
+	else { endSnake = true; }
+
+
 }
 
 void start::setBoardDebugger()
