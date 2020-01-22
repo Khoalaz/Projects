@@ -37,6 +37,8 @@ void start::startSnake(start& startBoard, std::queue<int> &key_q)
 			endSnake = true;
 		}
 
+		//boardCheck();
+
 		tempCoord = snakeFrag.back();
 		snake.nextPos();
 		snakePrintPos(&tempCoord);
@@ -62,6 +64,26 @@ void start::printBoard()
 			std::cout << grid2D[x][y];
 		}
 		std::cout << std::endl;
+	}
+}
+
+void start::boardCheck()
+{
+	snakeNextCoord = snakeFrag.front();
+	switch (snake.getSnakeDirection())
+	{
+	case UP:
+		snakeNextCoord.x--;
+		break;
+	case DOWN:
+		snakeNextCoord.x++;
+		break;
+	case LEFT:
+		snakeNextCoord.y--;
+		break;
+	case RIGHT:
+		snakeNextCoord.y++;
+		break;
 	}
 }
 
@@ -95,7 +117,7 @@ void start::setSnakeDebugger()
 
 void start::snakePrintPos(coordinates* tempCoord)
 {
-	setSnakeDebugger();
+	grid2D[snakeFrag.front().x][snakeFrag.front().y] = 'O';
 	grid2D[tempCoord->x][tempCoord->y] = ' ';
 }
 
@@ -139,4 +161,5 @@ void start::flush()
 {
 	snake.setInitPos(xSize, ySize);
 	setBoardDebugger();
+	//reset food
 }

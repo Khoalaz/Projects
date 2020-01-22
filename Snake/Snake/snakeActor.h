@@ -24,6 +24,7 @@ public:
 	void setInitPos(const int gridX, const int gridY);
 	void nextPos();
 	void setSnakeDirection(int* key);
+	snakeState getSnakeDirection();
 	std::vector<coordinates>& getSnakeFrag();
 
 	void printCoord();			//debugger

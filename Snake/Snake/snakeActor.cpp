@@ -32,16 +32,16 @@ void snakeActor::nextPos()
 	switch (snakeS)
 	{
 	case UP:
-		snake.front().x -= 1;
+		snake.front().x--;
 		break;
 	case DOWN:
-		snake.front().x += 1;
+		snake.front().x++;
 		break;
 	case LEFT:
-		snake.front().y -= 1;
+		snake.front().y--;
 		break;
 	case RIGHT:
-		snake.front().y += 1;
+		snake.front().y++;
 		break;
 	}
 }
@@ -85,4 +85,9 @@ void snakeActor::printCoord()
 	{
 		std::cout << it->x << " " << it->y << std::endl;
 	}
+}
+
+snakeState snakeActor::getSnakeDirection()
+{
+	return snakeS;
 }

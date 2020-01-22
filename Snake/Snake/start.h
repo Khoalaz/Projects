@@ -25,6 +25,7 @@ public:
 	void setDifficulty(short diffInput);
 
 private:
+	void boardCheck();
 	void setBoardDebugger();
 	inline void setSnakeDebugger();
 	void foodGenerator();			//to be worked on
@@ -37,7 +38,7 @@ private:
 	char** grid2D;
 	food sFood;
 	
-
 	snakeActor snake;
 	std::vector<coordinates>& snakeFrag = snake.getSnakeFrag();
+	coordinates snakeNextCoord;
 };
