@@ -8,6 +8,7 @@
 struct coordinates {
 	short x;
 	short y;
+
 };
 
 enum snakeState {
@@ -26,9 +27,11 @@ public:
 	void setSnakeDirection(int* key);
 	snakeState getSnakeDirection();
 	std::vector<coordinates>& getSnakeFrag();
-
+	void snakeEat();
 	void printCoord();			//debugger
 private:
+	coordinates newSnakeFrag;
+	bool eating;
 	snakeState snakeS;
 	std::vector<coordinates> snake;
 };

@@ -90,7 +90,7 @@ void start::boardCheck()
 	else if (grid2D[snakeNextCoord.x][snakeNextCoord.y] == '0')
 	{
 		flushFood();
-
+		snake.snakeEat();
 		foodGenerator();
 	}
 	else { endSnake = true; }

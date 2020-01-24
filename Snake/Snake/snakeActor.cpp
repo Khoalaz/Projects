@@ -1,11 +1,10 @@
 #include "snakeActor.h"
 
-snakeActor::snakeActor()
-{
-}
+snakeActor::snakeActor(){}
 
 void snakeActor::setInitPos(const int gridX, const int gridY)
 {
+	eating = false;
 	snakeS = RIGHT;
 	snake.clear();
 
@@ -23,11 +22,20 @@ void snakeActor::setInitPos(const int gridX, const int gridY)
 
 void snakeActor::nextPos()
 {
-	for (std::vector<coordinates>::reverse_iterator rit = snake.rbegin(); rit != snake.rend() - 1; ++rit)
+	if (eating == false)
 	{
-		rit->x = (rit + 1)->x;
-		rit->y = (rit + 1)->y;
+		for (std::vector<coordinates>::reverse_iterator rit = snake.rbegin(); rit != snake.rend() - 1; ++rit)
+		{
+			rit->x = (rit + 1)->x;
+			rit->y = (rit + 1)->y;
+		}
 	}
+	else
+	{
+		snake.emplace(snake.begin(), snake.front());
+		eating = false;
+	}
+
 
 	switch (snakeS)
 	{
@@ -44,6 +52,27 @@ void snakeActor::nextPos()
 		snake.front().y++;
 		break;
 	}
+	
+	/*{
+		switch (snakeS)
+		{
+		case UP:
+			newSnakeFrag.x = snake.front().x - 1;
+			break;
+		case DOWN:
+			newSnakeFrag.x = snake.front().x + 1;
+			break;
+		case LEFT:
+			newSnakeFrag.y = snake.front().y - 1;
+			break;
+		case RIGHT:
+			newSnakeFrag.y = snake.front().y + 1;
+			break;
+		}
+
+		snake.insert(snake.begin(), newSnakeFrag);
+		eating = false;
+	}*/
 }
 
 void snakeActor::setSnakeDirection(int* key)
@@ -77,6 +106,11 @@ void snakeActor::setSnakeDirection(int* key)
 std::vector<coordinates>& snakeActor::getSnakeFrag()
 {
 	return snake;
+}
+
+void snakeActor::snakeEat()
+{
+	eating = true;
 }
 
 void snakeActor::printCoord()
