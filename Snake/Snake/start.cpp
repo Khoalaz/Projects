@@ -89,11 +89,11 @@ void start::boardCheck()
 	if (grid2D[snakeNextCoord.x][snakeNextCoord.y] == ' '){}
 	else if (grid2D[snakeNextCoord.x][snakeNextCoord.y] == '0')
 	{
+		flushFood();
 
+		foodGenerator();
 	}
 	else { endSnake = true; }
-
-
 }
 
 void start::setBoardDebugger()
@@ -151,12 +151,14 @@ void start::setDifficulty(short diffInput)
 
 void start::foodGenerator()
 {
-	coordinates foodPos;
+	srand(static_cast<unsigned int>(time(NULL)));
 	while (sFood.fSpawned != true)
 	{
-		foodPos.x = rand() % (xSize - 2) + 1;
-		foodPos.y = rand() % (ySize - 2) + 1;
+		sFood.foodPos.x = rand() % (xSize - 2) + 1;
+		sFood.foodPos.y = rand() % (ySize - 2) + 1;
 		sFood.fSpawned = true;
+
+		//work on not spawning under the snake
 	}
 	foodPrintPos();
 }
@@ -166,9 +168,16 @@ void start::foodPrintPos()
 	grid2D[sFood.foodPos.x][sFood.foodPos.y] = '0';
 }
 
+void start::flushFood()
+{
+	sFood.foodPos.x = 0;
+	sFood.foodPos.y = 0;
+	sFood.fSpawned = false;
+}
+
 void start::flush()
 {
 	snake.setInitPos(xSize, ySize);
 	setBoardDebugger();
-	//reset food
+	flushFood();
 }

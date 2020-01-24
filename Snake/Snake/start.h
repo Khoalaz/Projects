@@ -31,6 +31,7 @@ private:
 	void foodGenerator();			//to be worked on
 	inline void snakePrintPos(coordinates *tempCoord);
 	inline void foodPrintPos();
+	inline void flushFood();
 	inline void flush();
 
 	int msTimer;

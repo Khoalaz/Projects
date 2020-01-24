@@ -157,7 +157,6 @@ void menuState_t(start& startBoard, bool& exitFlag, std::queue<int>& key_q, std:
 int main()
 {
 	bool exitFlag=false;
-	srand(static_cast<unsigned int>(time(0)));
 	start startBoard;
 
 	std::mutex mtx_Control;
