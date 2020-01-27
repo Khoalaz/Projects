@@ -1,6 +1,2 @@
-﻿  Snake.cpp
-  snakeActor.cpp
-  start.cpp
-  Generating Code...
-c:\users\khoalaz\desktop\portfolio\projects\snake\snake\menuabstract.h(27): warning C4715: 'menuAbstract::menuControl': not all control paths return a value
+﻿  start.cpp
   Snake.vcxproj -> C:\Users\KhoaLaZ\Desktop\Portfolio\Projects\Snake\Debug\Snake.exe

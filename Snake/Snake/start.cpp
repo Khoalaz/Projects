@@ -135,13 +135,13 @@ void start::setDifficulty(short diffInput)
 	switch (diffInput)
 	{
 	case 1:
-		msTimer = 200;
+		msTimer = 100;
 		break;
 	case 2:
-		msTimer = 50;
+		msTimer = 30;
 		break;
 	case 3:
-		msTimer = 20;
+		msTimer = 10;
 		break;
 	case 4:
 		msTimer = 0;
@@ -156,9 +156,15 @@ void start::foodGenerator()
 	{
 		sFood.foodPos.x = rand() % (xSize - 2) + 1;
 		sFood.foodPos.y = rand() % (ySize - 2) + 1;
+		
+		for (std::vector<coordinates>::iterator it = snakeFrag.begin(); it != snakeFrag.end(); ++it)
+		{
+			if (sFood.foodPos.x == it->x && sFood.foodPos.y == it->y)
+			{
+				continue;
+			}
+		}
 		sFood.fSpawned = true;
-
-		//work on not spawning under the snake
 	}
 	foodPrintPos();
 }

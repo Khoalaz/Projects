@@ -52,27 +52,6 @@ void snakeActor::nextPos()
 		snake.front().y++;
 		break;
 	}
-	
-	/*{
-		switch (snakeS)
-		{
-		case UP:
-			newSnakeFrag.x = snake.front().x - 1;
-			break;
-		case DOWN:
-			newSnakeFrag.x = snake.front().x + 1;
-			break;
-		case LEFT:
-			newSnakeFrag.y = snake.front().y - 1;
-			break;
-		case RIGHT:
-			newSnakeFrag.y = snake.front().y + 1;
-			break;
-		}
-
-		snake.insert(snake.begin(), newSnakeFrag);
-		eating = false;
-	}*/
 }
 
 void snakeActor::setSnakeDirection(int* key)
