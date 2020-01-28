@@ -157,6 +157,7 @@
     <ClCompile Include="start.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="historyMenu.h" />
     <ClInclude Include="Menus.h" />
     <ClInclude Include="menuAbstract.h" />
     <ClInclude Include="snakeActor.h" />

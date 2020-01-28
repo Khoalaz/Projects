@@ -11,6 +11,7 @@
 #include <queue>
 #include "Menus.h"
 #include "start.h"
+#include "historyMenu.h"
 
 /*constexpr int KEY_UP_k = 72;
 constexpr int KEY_DOWN_k = 80;
@@ -45,6 +46,7 @@ void controls_t(bool&exitFlag, std::queue<int>& key_q, std::condition_variable& 
 void menuState_t(start& startBoard, bool& exitFlag, std::queue<int>& key_q, std::mutex& mtx_Control, std::condition_variable& cv_Control)
 {
 	mainMenu mMenu;
+	historyMenu hMenu;
 	settingsMenu sMenu;
 	difficultyMenu dMenu;
 	gridMenu gMenu;
@@ -67,7 +69,7 @@ void menuState_t(start& startBoard, bool& exitFlag, std::queue<int>& key_q, std:
 			switch (mMenu.menuControl(key))
 			{
 			case 1:
-				currentState = start_s;
+				//currentState = start_s;
 				startBoard.startSnake(startBoard, key_q);
 				mMenu.menuPrint();
 				break;

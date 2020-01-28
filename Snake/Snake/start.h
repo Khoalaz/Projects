@@ -14,6 +14,8 @@ struct food{
 	coordinates foodPos;
 };
 
+
+
 class start 
 {
 public:
@@ -28,7 +30,7 @@ private:
 	void boardCheck();
 	void setBoardDebugger();
 	inline void setSnakeDebugger();
-	void foodGenerator();			//to be worked on
+	void foodGenerator();
 	inline void snakePrintPos(coordinates *tempCoord);
 	inline void foodPrintPos();
 	inline void flushFood();
